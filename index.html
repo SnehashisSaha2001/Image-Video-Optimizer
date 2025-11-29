@@ -1,0 +1,1850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pro Display Media Optimizer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .app-container {
+            display: flex;
+            height: 100vh;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
+
+        /* Left Sidebar */
+        .sidebar {
+            width: 380px;
+            background: #ffffff;
+            box-shadow: 2px 0 20px rgba(0, 0, 0, 0.1);
+            overflow-y: auto;
+            padding: 30px 25px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f0f0f0;
+            flex-shrink: 0;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+        }
+
+        .logo-icon i {
+            color: white;
+            font-size: 20px;
+        }
+
+        .logo-text {
+            font-size: 20px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .logo-subtitle {
+            font-size: 12px;
+            color: #7f8c8d;
+            margin-top: 2px;
+        }
+
+        /* Control Sections */
+        .control-section {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            border: 1px solid #e9ecef;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .section-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+        }
+
+        .section-icon i {
+            color: white;
+            font-size: 14px;
+        }
+
+        .section-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #2c3e50;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Form Controls */
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #495057;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ced4da;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s;
+            background: white;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        /* Preset Buttons */
+        .preset-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .preset-btn {
+            padding: 12px;
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 13px;
+            font-weight: 500;
+            color: #495057;
+            text-align: center;
+        }
+
+        .preset-btn:hover {
+            border-color: #667eea;
+            background: #f8f9ff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+        }
+
+        .preset-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: transparent;
+        }
+
+        /* Resize Mode Options */
+        .resize-mode-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .resize-mode-btn {
+            padding: 15px;
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            position: relative;
+        }
+
+        .resize-mode-btn:hover {
+            border-color: #667eea;
+            background: #f8f9ff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+        }
+
+        .resize-mode-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: transparent;
+        }
+
+        .resize-mode-btn .mode-icon {
+            font-size: 24px;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .resize-mode-btn .mode-title {
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .resize-mode-btn .mode-desc {
+            font-size: 11px;
+            opacity: 0.8;
+        }
+
+        /* Range Slider */
+        .range-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .range-slider {
+            flex: 1;
+            -webkit-appearance: none;
+            height: 6px;
+            border-radius: 3px;
+            background: #e9ecef;
+            outline: none;
+        }
+
+        .range-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+        }
+
+        .range-value {
+            min-width: 45px;
+            padding: 5px 10px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #667eea;
+            text-align: center;
+        }
+
+        /* Checkbox */
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .checkbox-group:hover {
+            background: #f8f9ff;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        .checkbox-group label {
+            cursor: pointer;
+            font-size: 14px;
+            color: #495057;
+        }
+
+        /* Orientation Controls */
+        .orientation-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .orientation-btn {
+            padding: 15px;
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .orientation-btn:hover {
+            border-color: #667eea;
+            background: #f8f9ff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+        }
+
+        .orientation-btn i {
+            font-size: 20px;
+            color: #667eea;
+        }
+
+        .orientation-btn span {
+            font-size: 12px;
+            color: #495057;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: auto; /* Push to bottom */
+            padding-top: 20px;
+            background: white;
+            position: sticky;
+            bottom: 0;
+            z-index: 10;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        .btn-primary:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: #f8f9fa;
+            color: #495057;
+            border: 2px solid #e9ecef;
+        }
+
+        .btn-secondary:hover {
+            background: #e9ecef;
+            transform: translateY(-2px);
+        }
+
+        /* Main Content Area */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: #fafbfc;
+            overflow: hidden;
+        }
+
+        .content-header {
+            padding: 25px 30px;
+            background: white;
+            border-bottom: 1px solid #e9ecef;
+            flex-shrink: 0;
+        }
+
+        .content-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .content-subtitle {
+            font-size: 14px;
+            color: #7f8c8d;
+        }
+
+        /* Upload Area */
+        .upload-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .upload-area {
+            width: 100%;
+            max-width: 600px;
+            height: 450px;
+            border: 3px dashed #dee2e6;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .upload-area:hover {
+            border-color: #667eea;
+            background: #f8f9ff;
+            transform: scale(1.02);
+        }
+
+        .upload-area.dragover {
+            border-color: #667eea;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+            transform: scale(1.05);
+        }
+
+        .upload-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .upload-icon i {
+            color: white;
+            font-size: 36px;
+        }
+
+        .upload-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .upload-text {
+            font-size: 14px;
+            color: #7f8c8d;
+            margin-bottom: 20px;
+        }
+
+        .supported-formats {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .format-badge {
+            padding: 6px 12px;
+            background: #f8f9fa;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #495057;
+            border: 1px solid #e9ecef;
+        }
+
+        /* Preview Area */
+        .preview-container {
+            width: 100%;
+            height: 100%;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .preview-container.active {
+            display: flex;
+        }
+
+        .preview-wrapper {
+            position: relative;
+            max-width: 90%;
+            max-height: 80%;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            background: #000;
+        }
+
+        .preview-media {
+            display: block;
+            max-width: 100%;
+            max-height: 70vh;
+            width: auto;
+            height: auto;
+        }
+
+        /* Media Info */
+        .media-info {
+            background: white;
+            padding: 15px 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            display: none;
+            margin-top: 20px;
+            width: fit-content;
+            border: 1px solid #e9ecef;
+        }
+
+        .media-info.active {
+            display: flex;
+            gap: 20px;
+        }
+
+        .info-col {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: #7f8c8d;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .info-value {
+            color: #2c3e50;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        /* Progress Bar */
+        .progress-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(5px);
+            z-index: 50;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .progress-overlay.active {
+            display: flex;
+        }
+
+        .progress-container {
+            width: 80%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .progress-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        .progress-bar-container {
+            height: 10px;
+            background: #e9ecef;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            width: 0%;
+            transition: width 0.3s;
+            border-radius: 5px;
+        }
+
+        .progress-text {
+            font-size: 14px;
+            color: #667eea;
+            font-weight: 600;
+        }
+        
+        .progress-detail {
+            font-size: 12px;
+            color: #7f8c8d;
+            margin-top: 5px;
+        }
+
+        /* Toast Notifications */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .toast {
+            background: white;
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            min-width: 300px;
+            animation: slideIn 0.3s ease;
+            border-left: 4px solid #667eea;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .toast.success {
+            border-left-color: #28a745;
+        }
+
+        .toast.error {
+            border-left-color: #dc3545;
+        }
+
+        .toast.warning {
+            border-left-color: #ffc107;
+        }
+
+        .toast-icon {
+            margin-right: 12px;
+            font-size: 20px;
+        }
+
+        .toast.success .toast-icon {
+            color: #28a745;
+        }
+
+        .toast.error .toast-icon {
+            color: #dc3545;
+        }
+
+        .toast.warning .toast-icon {
+            color: #ffc107;
+        }
+
+        .toast-message {
+            flex: 1;
+            font-size: 14px;
+            color: #2c3e50;
+        }
+
+        .toast-close {
+            margin-left: 12px;
+            cursor: pointer;
+            color: #adb5bd;
+            font-size: 16px;
+        }
+
+        /* Error Modal */
+        .error-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            backdrop-filter: blur(5px);
+        }
+
+        .error-modal.active {
+            display: flex;
+        }
+
+        .error-content {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .error-icon {
+            width: 60px;
+            height: 60px;
+            background: #fee;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+
+        .error-icon i {
+            color: #dc3545;
+            font-size: 30px;
+        }
+
+        .error-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .error-message {
+            font-size: 14px;
+            color: #7f8c8d;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        .error-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        /* Hidden Elements */
+        .hidden {
+            display: none !important;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                position: absolute;
+                height: 100%;
+                z-index: 100;
+                transform: translateX(-100%);
+                transition: transform 0.3s;
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .mobile-toggle {
+                display: block;
+                position: fixed;
+                top: 20px;
+                left: 20px;
+                z-index: 101;
+                width: 50px;
+                height: 50px;
+                background: white;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+                cursor: pointer;
+            }
+        }
+
+        .mobile-toggle {
+            display: none;
+        }
+
+        /* Video Controls */
+        .video-controls {
+            display: none;
+        }
+
+        .video-controls.active {
+            display: block;
+        }
+        
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Mobile Toggle -->
+        <div class="mobile-toggle" id="mobileToggle">
+            <i class="fas fa-bars"></i>
+        </div>
+
+        <!-- Left Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <!-- Logo -->
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-desktop"></i>
+                </div>
+                <div>
+                    <div class="logo-text">Pro Display</div>
+                    <div class="logo-subtitle">Media Optimizer</div>
+                </div>
+            </div>
+
+            <div style="flex: 1; overflow-y: auto; padding-right: 5px;">
+                <!-- Display Optimization -->
+                <div class="control-section">
+                    <div class="section-header">
+                        <div class="section-icon">
+                            <i class="fas fa-sliders-h"></i>
+                        </div>
+                        <div class="section-title">Dimensions</div>
+                    </div>
+
+                    <!-- Size -->
+                    <div class="form-group">
+                        <label class="form-label">Presets</label>
+                        <div class="preset-grid">
+                            <button class="preset-btn" data-width="3840" data-height="2160">4K UHD</button>
+                            <button class="preset-btn" data-width="1920" data-height="1080">Full HD</button>
+                            <button class="preset-btn" data-width="1280" data-height="720">HD Ready</button>
+                            <button class="preset-btn" data-width="1080" data-height="1920">Mobile (V)</button>
+                        </div>
+                    </div>
+
+                    <!-- Custom Size -->
+                    <div class="form-group">
+                        <label class="form-label">Custom Resolution (px)</label>
+                        <div style="display: flex; gap: 10px;">
+                            <input type="number" class="form-control" id="customWidth" placeholder="Width">
+                            <input type="number" class="form-control" id="customHeight" placeholder="Height">
+                        </div>
+                    </div>
+
+                    <!-- Resize Mode -->
+                    <div class="form-group">
+                        <label class="form-label">Resize Mode</label>
+                        <div class="resize-mode-options">
+                            <button class="resize-mode-btn active" data-mode="fit">
+                                <i class="fas fa-expand mode-icon"></i>
+                                <div class="mode-title">Fit</div>
+                                <div class="mode-desc">Preserve Aspect</div>
+                            </button>
+                            <button class="resize-mode-btn" data-mode="fill">
+                                <i class="fas fa-arrows-alt mode-icon"></i>
+                                <div class="mode-title">Fill</div>
+                                <div class="mode-desc">Crop to fill</div>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Lock Aspect Ratio -->
+                    <div class="form-group">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="lockAspectRatio" checked>
+                            <label for="lockAspectRatio">Lock aspect ratio</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Rotation -->
+                <div class="control-section">
+                    <div class="section-header">
+                        <div class="section-icon">
+                            <i class="fas fa-sync-alt"></i>
+                        </div>
+                        <div class="section-title">Rotation</div>
+                    </div>
+
+                    <div class="orientation-grid">
+                        <button class="orientation-btn" id="rotateLeft">
+                            <i class="fas fa-undo"></i>
+                            <span>Rotate Left</span>
+                        </button>
+                        <button class="orientation-btn" id="rotateRight">
+                            <i class="fas fa-redo"></i>
+                            <span>Rotate Right</span>
+                        </button>
+                        <button class="orientation-btn" id="flipHorizontal">
+                            <i class="fas fa-arrows-alt-h"></i>
+                            <span>Flip H</span>
+                        </button>
+                        <button class="orientation-btn" id="flipVertical">
+                            <i class="fas fa-arrows-alt-v"></i>
+                            <span>Flip V</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Video Specific Controls -->
+                <div class="control-section video-controls" id="videoControls">
+                    <div class="section-header">
+                        <div class="section-icon">
+                            <i class="fas fa-film"></i>
+                        </div>
+                        <div class="section-title">Video Settings</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Frame Rate (FPS)</label>
+                        <select class="form-control" id="frameRate">
+                            <option value="original">Keep Original</option>
+                            <option value="24">24 (Cinematic)</option>
+                            <option value="30">30 (Standard)</option>
+                            <option value="60">60 (Smooth)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Bitrate Control</label>
+                        <select class="form-control" id="bitrate">
+                            <option value="auto">Auto (Optimization)</option>
+                            <option value="2">2 Mbps (Low)</option>
+                            <option value="5">5 Mbps (Medium)</option>
+                            <option value="10">10 Mbps (High)</option>
+                            <option value="20">20 Mbps (Ultra)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="muteAudio">
+                            <label for="muteAudio">Remove Audio</label>
+                        </div>
+                        <small style="color: #7f8c8d; display:block; margin-top:5px; font-size:11px;">
+                            Audio is preserved by default.
+                        </small>
+                    </div>
+                </div>
+
+                <!-- Quality & Format -->
+                <div class="control-section">
+                    <div class="section-header">
+                        <div class="section-icon">
+                            <i class="fas fa-file-export"></i>
+                        </div>
+                        <div class="section-title">Export</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Format</label>
+                        <select class="form-control" id="outputFormat">
+                            <option value="auto">Auto Detect</option>
+                            <option value="jpeg">JPEG (Image)</option>
+                            <option value="png">PNG (Image)</option>
+                            <option value="mp4">MP4 (Video)</option>
+                            <option value="webm">WebM (Video)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Quality Level</label>
+                        <div class="range-container">
+                            <input type="range" class="range-slider" id="qualitySlider" min="10" max="100" value="80">
+                            <div class="range-value" id="qualityValue">80%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button class="btn btn-secondary" id="resetBtn">
+                    <i class="fas fa-redo"></i>
+                    Reset
+                </button>
+                <button class="btn btn-primary" id="processBtn">
+                    <i class="fas fa-magic"></i>
+                    Optimize
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="content-header">
+                <h1 class="content-title">Media Optimization</h1>
+                <p class="content-subtitle">Professional optimization for Images & Videos with audio preservation</p>
+            </div>
+
+            <div class="upload-container">
+                <!-- Upload Area -->
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                    </div>
+                    <div class="upload-title">Drag & Drop Media Here</div>
+                    <div class="upload-text">or click to browse files</div>
+                    <div class="supported-formats">
+                        <span class="format-badge">JPG</span>
+                        <span class="format-badge">PNG</span>
+                        <span class="format-badge">MP4</span>
+                        <span class="format-badge">MOV</span>
+                        <span class="format-badge">WebM</span>
+                    </div>
+                </div>
+
+                <!-- Preview Container -->
+                <div class="preview-container" id="previewContainer">
+                    <div class="preview-wrapper">
+                        <img class="preview-media" id="imagePreview" alt="Preview" style="display:none;">
+                        <video class="preview-media" id="videoPreview" controls style="display:none;"></video>
+                        <canvas id="canvas" style="display: none;"></canvas>
+                    </div>
+
+                    <!-- Media Info -->
+                    <div class="media-info" id="mediaInfo">
+                        <div class="info-col">
+                            <span class="info-label">Type</span>
+                            <span class="info-value" id="mediaType">-</span>
+                        </div>
+                        <div class="info-col">
+                            <span class="info-label">Resolution</span>
+                            <span class="info-value" id="mediaResolution">-</span>
+                        </div>
+                        <div class="info-col">
+                            <span class="info-label">Size</span>
+                            <span class="info-value" id="mediaFileSize">-</span>
+                        </div>
+                        <div class="info-col">
+                            <span class="info-label">Duration</span>
+                            <span class="info-value" id="mediaDuration">-</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Progress Overlay -->
+                <div class="progress-overlay" id="progressOverlay">
+                    <div class="progress-container">
+                        <div class="spinner"></div>
+                        <div class="progress-title">Processing Media</div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar" id="progressBar"></div>
+                        </div>
+                        <div class="progress-text" id="progressText">0%</div>
+                        <div class="progress-detail" id="progressDetail">Initializing engine...</div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Error Modal -->
+    <div class="error-modal" id="errorModal">
+        <div class="error-content">
+            <div class="error-icon">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <h2 class="error-title">Processing Error</h2>
+            <p class="error-message" id="errorMessage">An error occurred while processing your media.</p>
+            <div class="error-buttons">
+                <button class="btn btn-secondary" id="retryBtn">
+                    <i class="fas fa-redo"></i>
+                    Retry
+                </button>
+                <button class="btn btn-primary" id="selectAnotherBtn">
+                    <i class="fas fa-folder-open"></i>
+                    Select Another
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden File Input -->
+    <input type="file" id="fileInput" accept="image/*,video/*" style="display: none;">
+
+    <!-- FFmpeg.wasm Scripts -->
+    <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.11.6/dist/ffmpeg.min.js"></script>
+
+    <script>
+        // App State
+        const app = {
+            currentFile: null,
+            fileType: null,
+            originalWidth: 0,
+            originalHeight: 0,
+            targetWidth: 1920,
+            targetHeight: 1080,
+            rotation: 0,
+            flipH: false,
+            flipV: false,
+            isProcessing: false,
+            processedBlob: null,
+            ffmpeg: null,
+            fetchFile: null,
+            resizeMode: 'fit'
+        };
+
+        // DOM Elements
+        const elements = {
+            sidebar: document.getElementById('sidebar'),
+            mobileToggle: document.getElementById('mobileToggle'),
+            fileInput: document.getElementById('fileInput'),
+            uploadArea: document.getElementById('uploadArea'),
+            previewContainer: document.getElementById('previewContainer'),
+            imagePreview: document.getElementById('imagePreview'),
+            videoPreview: document.getElementById('videoPreview'),
+            canvas: document.getElementById('canvas'),
+            mediaInfo: document.getElementById('mediaInfo'),
+            mediaType: document.getElementById('mediaType'),
+            mediaResolution: document.getElementById('mediaResolution'),
+            mediaFileSize: document.getElementById('mediaFileSize'),
+            mediaDuration: document.getElementById('mediaDuration'),
+            progressOverlay: document.getElementById('progressOverlay'),
+            progressBar: document.getElementById('progressBar'),
+            progressText: document.getElementById('progressText'),
+            progressDetail: document.getElementById('progressDetail'),
+            toastContainer: document.getElementById('toastContainer'),
+            errorModal: document.getElementById('errorModal'),
+            errorMessage: document.getElementById('errorMessage'),
+            retryBtn: document.getElementById('retryBtn'),
+            selectAnotherBtn: document.getElementById('selectAnotherBtn'),
+            resetBtn: document.getElementById('resetBtn'),
+            processBtn: document.getElementById('processBtn'),
+            customWidth: document.getElementById('customWidth'),
+            customHeight: document.getElementById('customHeight'),
+            lockAspectRatio: document.getElementById('lockAspectRatio'),
+            qualitySlider: document.getElementById('qualitySlider'),
+            qualityValue: document.getElementById('qualityValue'),
+            outputFormat: document.getElementById('outputFormat'),
+            videoControls: document.getElementById('videoControls'),
+            frameRate: document.getElementById('frameRate'),
+            bitrate: document.getElementById('bitrate'),
+            muteAudio: document.getElementById('muteAudio')
+        };
+
+        // Initialize FFmpeg
+        async function initFFmpeg() {
+            if (typeof FFmpeg === 'undefined') {
+                throw new Error("FFmpeg library failed to load. Please check your internet connection.");
+            }
+
+            if (app.ffmpeg && app.ffmpeg.isLoaded()) {
+                return;
+            }
+
+            const { createFFmpeg, fetchFile } = FFmpeg;
+            app.fetchFile = fetchFile;
+
+            // Helper to create instance
+            const createInstance = (forceST) => {
+                // Determine if we should try Multi-Threaded
+                const useMT = !forceST && window.crossOriginIsolated && typeof SharedArrayBuffer !== 'undefined';
+                
+                // Use jsdelivr which is generally more reliable for these large files
+                const corePath = useMT 
+                    ? 'https://cdn.jsdelivr.net/npm/@ffmpeg/core@0.11.0/dist/ffmpeg-core.js'
+                    : 'https://cdn.jsdelivr.net/npm/@ffmpeg/core-st@0.11.1/dist/ffmpeg-core.js';
+
+                console.log(`[FFmpeg] Initializing. ForceST: ${forceST}, Detected MT support: ${useMT}`);
+                console.log(`[FFmpeg] Loading core from: ${corePath}`);
+
+                return createFFmpeg({
+                    log: true,
+                    corePath: corePath,
+                    progress: ({ ratio }) => {
+                        const percent = Math.min(Math.max(0, ratio * 100), 100);
+                        updateProgress(percent, 'Encoding...');
+                    }
+                });
+            };
+
+            try {
+                // Attempt 1: Try optimal configuration
+                if (!app.ffmpeg) app.ffmpeg = createInstance(false);
+                updateProgress(0, 'Loading video engine...');
+                
+                try {
+                    await app.ffmpeg.load();
+                } catch (loadError) {
+                    console.warn("First attempt to load FFmpeg failed.", loadError);
+                    // Explicitly nullify to allow recreation
+                    app.ffmpeg = null; 
+                    throw loadError; // Trigger fallback
+                }
+                
+            } catch (e) {
+                console.warn("Retrying with Single-Threaded core.");
+                
+                // Attempt 2: Fallback to Single Threaded
+                try {
+                    updateProgress(0, 'Loading compatibility engine...');
+                    app.ffmpeg = createInstance(true); // Force Single Threaded
+                    await app.ffmpeg.load();
+                    showToast("Using compatibility mode (slower)", "warning");
+                } catch (retryError) {
+                    console.error("FFmpeg Retry Error", retryError);
+                    app.ffmpeg = null; // Clean up so next retry works from scratch
+                    throw new Error("Failed to load video processing engine. This browser may not support the required features or the network request failed.");
+                }
+            }
+        }
+
+        // Event Listeners
+        elements.mobileToggle.addEventListener('click', () => {
+            elements.sidebar.classList.toggle('open');
+        });
+
+        elements.uploadArea.addEventListener('click', () => {
+            elements.fileInput.click();
+        });
+
+        elements.fileInput.addEventListener('change', handleFileSelect);
+
+        // Drag and Drop
+        elements.uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            elements.uploadArea.classList.add('dragover');
+        });
+
+        elements.uploadArea.addEventListener('dragleave', () => {
+            elements.uploadArea.classList.remove('dragover');
+        });
+
+        elements.uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            elements.uploadArea.classList.remove('dragover');
+            
+            if (e.dataTransfer.files.length) {
+                handleFile(e.dataTransfer.files[0]);
+            }
+        });
+
+        // Size Presets
+        document.querySelectorAll('.preset-btn[data-width]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.preset-btn[data-width]').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                app.targetWidth = parseInt(btn.dataset.width);
+                app.targetHeight = parseInt(btn.dataset.height);
+                
+                elements.customWidth.value = app.targetWidth;
+                elements.customHeight.value = app.targetHeight;
+                
+                if (app.fileType === 'image') applyTransformations();
+            });
+        });
+
+        // Resize Mode
+        document.querySelectorAll('.resize-mode-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.resize-mode-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                app.resizeMode = btn.dataset.mode;
+                
+                if (app.fileType === 'image') {
+                    // Refresh preview for image immediately
+                    applyTransformations();
+                }
+            });
+        });
+
+        // Custom Size Inputs
+        elements.customWidth.addEventListener('input', () => {
+            if (elements.lockAspectRatio.checked && app.originalWidth && app.originalHeight) {
+                const ratio = app.originalHeight / app.originalWidth;
+                elements.customHeight.value = Math.round(elements.customWidth.value * ratio);
+            }
+            app.targetWidth = parseInt(elements.customWidth.value) || 1920;
+            app.targetHeight = parseInt(elements.customHeight.value) || 1080;
+            if (app.fileType === 'image') applyTransformations();
+        });
+
+        elements.customHeight.addEventListener('input', () => {
+            if (elements.lockAspectRatio.checked && app.originalWidth && app.originalHeight) {
+                const ratio = app.originalWidth / app.originalHeight;
+                elements.customWidth.value = Math.round(elements.customHeight.value * ratio);
+            }
+            app.targetWidth = parseInt(elements.customWidth.value) || 1920;
+            app.targetHeight = parseInt(elements.customHeight.value) || 1080;
+            if (app.fileType === 'image') applyTransformations();
+        });
+
+        // Orientation Controls
+        document.getElementById('rotateLeft').addEventListener('click', () => {
+            app.rotation = (app.rotation - 90) % 360;
+            if (app.fileType === 'image') applyTransformations();
+            else showToast('Rotation will apply on optimization', 'info');
+        });
+
+        document.getElementById('rotateRight').addEventListener('click', () => {
+            app.rotation = (app.rotation + 90) % 360;
+            if (app.fileType === 'image') applyTransformations();
+            else showToast('Rotation will apply on optimization', 'info');
+        });
+
+        document.getElementById('flipHorizontal').addEventListener('click', () => {
+            app.flipH = !app.flipH;
+            if (app.fileType === 'image') applyTransformations();
+            else showToast('Flip will apply on optimization', 'info');
+        });
+
+        document.getElementById('flipVertical').addEventListener('click', () => {
+            app.flipV = !app.flipV;
+            if (app.fileType === 'image') applyTransformations();
+            else showToast('Flip will apply on optimization', 'info');
+        });
+
+        // Quality Slider
+        elements.qualitySlider.addEventListener('input', () => {
+            elements.qualityValue.textContent = `${elements.qualitySlider.value}%`;
+        });
+
+        // Main Buttons
+        elements.processBtn.addEventListener('click', processMedia);
+        elements.resetBtn.addEventListener('click', resetApp);
+        elements.retryBtn.addEventListener('click', () => {
+            elements.errorModal.classList.remove('active');
+            processMedia();
+        });
+        elements.selectAnotherBtn.addEventListener('click', () => {
+            elements.errorModal.classList.remove('active');
+            elements.fileInput.click();
+        });
+
+        // -------------------------------------------------------------------------
+        // Core Functions
+        // -------------------------------------------------------------------------
+
+        function handleFileSelect(e) {
+            if (e.target.files.length) {
+                handleFile(e.target.files[0]);
+            }
+        }
+
+        function handleFile(file) {
+            if (!file.type.match('image.*') && !file.type.match('video.*')) {
+                showToast('Please select an image or video file', 'error');
+                return;
+            }
+
+            app.currentFile = file;
+            app.fileType = file.type.startsWith('image/') ? 'image' : 'video';
+            
+            // Reset state
+            app.rotation = 0;
+            app.flipH = false;
+            app.flipV = false;
+            
+            showFileInfo(file);
+            
+            // UI Toggle
+            elements.uploadArea.style.display = 'none';
+            elements.previewContainer.classList.add('active');
+            
+            if (app.fileType === 'image') {
+                loadImagePreview(file);
+                elements.videoControls.classList.remove('active');
+            } else {
+                loadVideoPreview(file);
+                elements.videoControls.classList.add('active');
+            }
+        }
+
+        function showFileInfo(file) {
+            elements.mediaType.textContent = app.fileType === 'image' ? 'Image' : 'Video';
+            elements.mediaFileSize.textContent = formatFileSize(file.size);
+            elements.mediaInfo.classList.add('active');
+            elements.mediaDuration.textContent = app.fileType === 'image' ? 'N/A' : 'Loading...';
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes < 1024) return bytes + ' B';
+            else if (bytes < 1048576) return Math.round(bytes / 1024) + ' KB';
+            else return Math.round(bytes / 1048576 * 10) / 10 + ' MB';
+        }
+
+        function loadImagePreview(file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const img = new Image();
+                img.onload = () => {
+                    app.originalWidth = img.width;
+                    app.originalHeight = img.height;
+                    
+                    elements.imagePreview.src = e.target.result;
+                    elements.imagePreview.style.display = 'block';
+                    elements.videoPreview.style.display = 'none';
+                    
+                    elements.mediaResolution.textContent = `${img.width} × ${img.height}`;
+                    
+                    // Defaults
+                    elements.customWidth.value = img.width;
+                    elements.customHeight.value = img.height;
+                    app.targetWidth = img.width;
+                    app.targetHeight = img.height;
+                    
+                    applyTransformations(); // Initial draw
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function loadVideoPreview(file) {
+            const url = URL.createObjectURL(file);
+            elements.videoPreview.src = url;
+            elements.videoPreview.style.display = 'block';
+            elements.imagePreview.style.display = 'none';
+            
+            elements.videoPreview.onloadedmetadata = () => {
+                app.originalWidth = elements.videoPreview.videoWidth;
+                app.originalHeight = elements.videoPreview.videoHeight;
+                
+                elements.mediaResolution.textContent = `${app.originalWidth} × ${app.originalHeight}`;
+                elements.mediaDuration.textContent = formatDuration(elements.videoPreview.duration);
+                
+                // Defaults
+                elements.customWidth.value = app.originalWidth;
+                elements.customHeight.value = app.originalHeight;
+                app.targetWidth = app.originalWidth;
+                app.targetHeight = app.originalHeight;
+            };
+        }
+
+        function formatDuration(seconds) {
+            const m = Math.floor(seconds / 60);
+            const s = Math.floor(seconds % 60);
+            return `${m}:${s.toString().padStart(2, '0')}`;
+        }
+
+        function applyTransformations() {
+            // Only purely visual for Image Preview in Canvas. 
+            // Video transformations are handled via FFmpeg during process.
+            if (app.fileType === 'image') {
+                const img = new Image();
+                img.onload = () => {
+                    const ctx = elements.canvas.getContext('2d');
+                    
+                    // Determine bounds based on rotation
+                    let width = img.width;
+                    let height = img.height;
+                    
+                    if (app.rotation % 180 !== 0) {
+                        [width, height] = [height, width];
+                    }
+                    
+                    // Canvas needs to fit the transformed image
+                    elements.canvas.width = width;
+                    elements.canvas.height = height;
+                    
+                    ctx.clearRect(0, 0, width, height);
+                    ctx.save();
+                    
+                    ctx.translate(width / 2, height / 2);
+                    ctx.rotate(app.rotation * Math.PI / 180);
+                    
+                    if (app.flipH) ctx.scale(-1, 1);
+                    if (app.flipV) ctx.scale(1, -1);
+                    
+                    // Draw image centered in rotated context
+                    if (app.rotation % 180 !== 0) {
+                        ctx.drawImage(img, -height / 2, -width / 2, height, width);
+                    } else {
+                        ctx.drawImage(img, -width / 2, -height / 2, width, height);
+                    }
+                    
+                    ctx.restore();
+                    
+                    // Update preview src to reflect transformation immediately
+                    elements.imagePreview.src = elements.canvas.toDataURL();
+                };
+                // Use original source for re-transformation
+                img.src = URL.createObjectURL(app.currentFile);
+            }
+        }
+
+        async function processMedia() {
+            if (!app.currentFile || app.isProcessing) return;
+            
+            app.isProcessing = true;
+            elements.progressOverlay.classList.add('active');
+            
+            try {
+                if (app.fileType === 'image') {
+                    await processImage();
+                } else {
+                    await processVideoWithFFmpeg();
+                }
+                
+                updateProgress(100, 'Done!');
+                downloadProcessedMedia();
+                showToast('Media optimized successfully!', 'success');
+            } catch (error) {
+                console.error(error);
+                showError(error.message || 'An error occurred during processing.');
+            } finally {
+                app.isProcessing = false;
+                setTimeout(() => {
+                    elements.progressOverlay.classList.remove('active');
+                    updateProgress(0, 'Waiting...');
+                }, 1500);
+            }
+        }
+
+        async function processImage() {
+            return new Promise((resolve, reject) => {
+                const img = new Image();
+                img.onload = () => {
+                    const ctx = elements.canvas.getContext('2d');
+                    
+                    // Calculate dimensions based on user target
+                    let targetW = app.targetWidth;
+                    let targetH = app.targetHeight;
+                    
+                    // Apply Resize Mode logic to find draw dimensions
+                    let drawX = 0, drawY = 0, drawW = targetW, drawH = targetH;
+                    
+                    // Adjust canvas size for rotation
+                    // We render to a canvas size of Target Width/Height
+                    elements.canvas.width = targetW;
+                    elements.canvas.height = targetH;
+                    
+                    // Clear background
+                    ctx.fillStyle = '#000000'; // Fill black for letterboxing
+                    ctx.fillRect(0,0, targetW, targetH);
+                    
+                    updateProgress(30, 'Resizing...');
+
+                    // Complex logic for Fit vs Fill with Rotation
+                    // Simplified: We draw the source image transformed onto the target canvas
+                    ctx.save();
+                    
+                    // Center pivot
+                    ctx.translate(targetW / 2, targetH / 2);
+                    ctx.rotate(app.rotation * Math.PI / 180);
+                    if (app.flipH) ctx.scale(-1, 1);
+                    if (app.flipV) ctx.scale(1, -1);
+
+                    // Source dimensions
+                    let srcW = img.width;
+                    let srcH = img.height;
+
+                    // If rotated 90/270, swap src dimension logic for aspect calculation relative to upright canvas
+                    let aspectSrc = srcW / srcH;
+                    if (app.rotation % 180 !== 0) {
+                        aspectSrc = srcH / srcW; 
+                    }
+                    
+                    let aspectTarget = targetW / targetH;
+                    
+                    let renderW, renderH;
+
+                    if (app.resizeMode === 'fit') {
+                        // Fit inside
+                        if (aspectSrc > aspectTarget) {
+                            renderW = targetW;
+                            renderH = targetW / aspectSrc;
+                        } else {
+                            renderH = targetH;
+                            renderW = targetH * aspectSrc;
+                        }
+                    } else {
+                        // Fill (Cover)
+                        if (aspectSrc > aspectTarget) {
+                            renderH = targetH;
+                            renderW = targetH * aspectSrc;
+                        } else {
+                            renderW = targetW;
+                            renderH = targetW / aspectSrc;
+                        }
+                    }
+
+                    // If rotated 90/270, we need to swap the render dimensions for the drawImage call
+                    // because drawImage works in the image's local coordinate space
+                    if (app.rotation % 180 !== 0) {
+                        // Swap back for local space
+                        ctx.drawImage(img, -renderH/2, -renderW/2, renderH, renderW);
+                    } else {
+                        ctx.drawImage(img, -renderW/2, -renderH/2, renderW, renderH);
+                    }
+                    
+                    ctx.restore();
+                    updateProgress(80, 'Compressing...');
+
+                    // Format
+                    let format = elements.outputFormat.value;
+                    if (format === 'auto' || format === 'mp4' || format === 'webm') {
+                        format = app.currentFile.type === 'image/png' ? 'png' : 'jpeg';
+                    }
+                    
+                    const quality = elements.qualitySlider.value / 100;
+                    
+                    elements.canvas.toBlob((blob) => {
+                        app.processedBlob = blob;
+                        resolve();
+                    }, `image/${format}`, quality);
+                };
+                img.onerror = () => reject(new Error('Failed to load image for processing'));
+                img.src = URL.createObjectURL(app.currentFile);
+            });
+        }
+
+        async function processVideoWithFFmpeg() {
+            await initFFmpeg();
+            
+            updateProgress(0, 'Preparing inputs...');
+
+            // Determine output format
+            let ext = elements.outputFormat.value;
+            if (ext === 'auto' || ext === 'jpeg' || ext === 'png') {
+                ext = 'mp4'; // Default to mp4 if video
+            }
+
+            const inputName = 'input.' + (app.currentFile.name.split('.').pop() || 'mp4');
+            const outputName = `output.${ext}`;
+            
+            // Write File
+            app.ffmpeg.FS('writeFile', inputName, await app.fetchFile(app.currentFile));
+            
+            // Build Filter String for Video
+            // Complex filter chain: [0:v] -> scale/crop -> rotate -> flip -> [outv]
+            const filters = [];
+            
+            // 1. Resize/Crop (Fit vs Fill)
+            // iw/ih are input width/height. ow/oh are output.
+            if (app.resizeMode === 'fit') {
+                // Scale to fit inside target, pad with black
+                filters.push(`scale=${app.targetWidth}:${app.targetHeight}:force_original_aspect_ratio=decrease`);
+                filters.push(`pad=${app.targetWidth}:${app.targetHeight}:(ow-iw)/2:(oh-ih)/2`);
+            } else {
+                // Scale to cover target, crop center
+                filters.push(`scale=${app.targetWidth}:${app.targetHeight}:force_original_aspect_ratio=increase`);
+                filters.push(`crop=${app.targetWidth}:${app.targetHeight}`);
+            }
+
+            // 2. Rotation
+            if (app.rotation !== 0) {
+                filters.push(`rotate=${app.rotation * Math.PI / 180}`);
+            }
+            
+            // 3. Flips
+            if (app.flipH) filters.push('hflip');
+            if (app.flipV) filters.push('vflip');
+            
+            const filterString = filters.join(',');
+            
+            // Build Arguments
+            const args = ['-i', inputName];
+            
+            // Video Codec & Bitrate
+            // H.264 is safest for web. VP9 for webm.
+            if (ext === 'mp4') {
+                args.push('-c:v', 'libx264', '-preset', 'ultrafast'); // ultrafast for browser speed
+                args.push('-pix_fmt', 'yuv420p'); // Ensure compatibility
+            } else {
+                args.push('-c:v', 'libvpx-vp9');
+            }
+            
+            // Video Filter
+            if (filterString) {
+                args.push('-vf', filterString);
+            }
+
+            // Bitrate
+            const bitrateVal = elements.bitrate.value;
+            if (bitrateVal !== 'auto') {
+                args.push('-b:v', `${bitrateVal}M`);
+            } else {
+                // Auto optimization logic: CRF 23 is default good, let's adjust by quality slider
+                // Quality slider 10-100. FFmpeg CRF 0-51 (lower is better).
+                // Map 100 -> 18, 50 -> 28, 10 -> 40
+                const quality = parseInt(elements.qualitySlider.value);
+                const crf = Math.round(40 - ((quality - 10) / 90) * 22);
+                args.push('-crf', `${crf}`);
+            }
+
+            // Frame Rate
+            if (elements.frameRate.value !== 'original') {
+                args.push('-r', elements.frameRate.value);
+            }
+
+            // --- AUDIO HANDLING ---
+            // Crucial: We must handle audio to not disrupt it.
+            if (elements.muteAudio.checked) {
+                args.push('-an');
+            } else {
+                // Explicitly re-encode audio to ensure compatibility with container and prevent loss
+                // If we use 'copy', it might fail if input is MKV (DTS) and output is MP4 (needs AAC)
+                if (ext === 'mp4') {
+                    args.push('-c:a', 'aac', '-b:a', '128k');
+                    // -strict experimental might be needed in some old ffmpeg builds, usually fine in wasm
+                } else if (ext === 'webm') {
+                    args.push('-c:a', 'libopus', '-b:a', '128k');
+                }
+                
+                // Ensure we map streams if they exist. FFmpeg default map usually works, 
+                // but -map 0 ensures we try to take everything from input 0.
+                // However, without complex filter graphs for audio, default mapping is safer.
+            }
+
+            args.push(outputName);
+            
+            console.log('FFmpeg Args:', args);
+            
+            // Run
+            await app.ffmpeg.run(...args);
+            
+            // Read Result
+            const data = app.ffmpeg.FS('readFile', outputName);
+            app.processedBlob = new Blob([data.buffer], { type: `video/${ext}` });
+            
+            // Cleanup
+            app.ffmpeg.FS('unlink', inputName);
+            app.ffmpeg.FS('unlink', outputName);
+        }
+
+        function downloadProcessedMedia() {
+            if (!app.processedBlob) return;
+            
+            const url = URL.createObjectURL(app.processedBlob);
+            const a = document.createElement('a');
+            a.href = url;
+            
+            const originalName = app.currentFile.name.split('.').slice(0, -1).join('.');
+            // Determine extension from blob type or selection
+            let ext = app.processedBlob.type.split('/')[1];
+            if (ext === 'jpeg') ext = 'jpg';
+            
+            a.download = `${originalName}_optimized.${ext}`;
+            
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            
+            // Clean up URL object after a delay
+            setTimeout(() => URL.revokeObjectURL(url), 1000);
+        }
+
+        function resetApp() {
+            app.currentFile = null;
+            app.processedBlob = null;
+            elements.fileInput.value = '';
+            
+            elements.uploadArea.style.display = 'flex';
+            elements.previewContainer.classList.remove('active');
+            elements.mediaInfo.classList.remove('active');
+            elements.videoControls.classList.remove('active');
+            elements.imagePreview.src = '';
+            elements.videoPreview.src = '';
+            
+            showToast('Ready for new media', 'info');
+        }
+
+        function updateProgress(percent, detail) {
+            elements.progressBar.style.width = `${percent}%`;
+            elements.progressText.textContent = `${Math.round(percent)}%`;
+            if (detail) elements.progressDetail.textContent = detail;
+        }
+
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            
+            let icon = 'fa-info-circle';
+            if (type === 'success') icon = 'fa-check-circle';
+            else if (type === 'error') icon = 'fa-exclamation-circle';
+            else if (type === 'warning') icon = 'fa-exclamation-triangle';
+            
+            toast.innerHTML = `
+                <i class="fas ${icon} toast-icon"></i>
+                <div class="toast-message">${message}</div>
+                <i class="fas fa-times toast-close"></i>
+            `;
+            
+            elements.toastContainer.appendChild(toast);
+            
+            const removeToast = () => {
+                toast.style.animation = 'slideIn 0.3s ease reverse';
+                setTimeout(() => {
+                    if (toast.parentElement) toast.parentElement.removeChild(toast);
+                }, 300);
+            };
+
+            setTimeout(removeToast, 5000);
+            toast.querySelector('.toast-close').addEventListener('click', removeToast);
+        }
+
+        function showError(message) {
+            elements.errorMessage.textContent = message;
+            elements.errorModal.classList.add('active');
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            showToast('Optimizer Ready', 'success');
+        });
+    </script>
+</body>
+</html>
